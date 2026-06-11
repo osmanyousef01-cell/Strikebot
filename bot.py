@@ -1,8 +1,36 @@
+import threading
+from http.server import HTTPServer, BaseHTTPRequestHandler
 import os
 import discord
 from discord.ext import commands
 import aiohttp
 import asyncio
+
+# ==========================================
+# DUMMY SERVER TO BYPASS RENDER PORT TIMEOUT
+# ==========================================
+import threading
+from http.server import HTTPServer, BaseHTTPRequestHandler
+
+class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.end_headers()
+        self.wfile.write(b"Bot is alive!")
+
+    # Quiet the log spam from Render's automatic pings
+    def log_message(self, format, *args):
+        return
+
+def run_dummy_server():
+    # Render automatically tells the bot what port to use via the PORT variable
+    port = int(os.environ.get("PORT", 10000))
+    server = HTTPServer(('0.0.0.0', port), SimpleHTTPRequestHandler)
+    server.serve_forever()
+
+# Spin up the server in a separate background thread so the bot can still run
+threading.Thread(target=run_dummy_server, daemon=True).start()
+# ==========================================
 
 # ⚠️ YOUR SECRET DISCORD BOT TOKEN IS EMBEDDED BELOW:
 TOKEN = os.getenv('MTQ1MTQxNDIxMzYzNjY1NzE5Mw.GXJhLl.WDGtLBct3NwBYMqf83zDUI-FarW_ssrVtior4Q')
