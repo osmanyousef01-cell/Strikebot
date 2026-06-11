@@ -262,21 +262,16 @@ async def set_strike_limit(ctx, limit: int):
 
 
 @bot.command()
-async def addstrike(ctx, member: str, amount: int = 1, *, reason: str = "No reason provided"):
-    # This keeps 'member' required, but lets amount default to 1 and reason default to blank!
-    # Safety check if they just typed ^addstrike with nothing else
-    if member is None:
-        await ctx.send("❌ **Error:** Please specify a player name. Example: `^addstrike Lumis`")
-        return
-
-    # --- YOUR ORIGINAL STRIKE LOGIC STARTS HERE ---
-    # (Keep whatever database or array saving lines you originally had below this)
+async def addstrike(ctx, member: discord.Member, amount: int = 1, *, reason: str = "No reason provided"):
+    # By changing 'member: str' to 'member: discord.Member', discord.py automatically 
+    # finds the user, handles errors if they don't exist, and gives you access to .id and .add_roles()!
 
     member_id = member.id
-    strike_database[member_id] = strike_database.get(member_id, 0) + 1
+    
+    # Use the 'amount' parameter we passed in so custom strike amounts work too!
+    strike_database[member_id] = strike_database.get(member_id, 0) + amount
     total_strikes = strike_database[member_id]
     
-    # MATCHES EXPLICIT SNAPSHOT PATTERN EXACTLY
     await ctx.send(f"Strike added to **{member.display_name}**. New Count: **{total_strikes}/{STRIKE_LIMIT}**")
 
     if total_strikes >= STRIKE_LIMIT:
@@ -321,7 +316,10 @@ async def addstrike(ctx, member: str, amount: int = 1, *, reason: str = "No reas
                 except Exception as e:
                     print(f"⚠️ Error executing scheduled unmute profile action: {e}")
 
-            asyncio.create_task(unmute_countdown(member, mute_role))
+            async def_run():
+                import asyncio
+                asyncio.create_task(unmute_countdown(member, mute_role))
+            await unmute_countdown(member, mute_role)
             
         except discord.Forbidden:
             await ctx.send("❌ **System Error:** Bot cannot assign the mute role. Move the bot's position higher in Server Settings > Roles!")
