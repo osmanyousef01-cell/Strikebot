@@ -234,7 +234,8 @@ async def set_strike_limit(ctx, limit: int):
 
 
 @bot.command()
-async def addstrike(ctx, member: str = None, amount: int = 1, *, reason: str = "No reason provided"):
+async def addstrike(ctx, member: str, amount: int = 1, *, reason: str = "No reason provided"):
+    # This keeps 'member' required, but lets amount default to 1 and reason default to blank!
     # Safety check if they just typed ^addstrike with nothing else
     if member is None:
         await ctx.send("❌ **Error:** Please specify a player name. Example: `^addstrike Lumis`")
