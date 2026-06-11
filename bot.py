@@ -233,14 +233,15 @@ async def set_strike_limit(ctx, limit: int):
     await ctx.send(f"Strike limit has been updated to **{STRIKE_LIMIT}**.")
 
 
-@bot.command(name='addstrike')
-@commands.has_any_role("moderator", "admin")
-async def add_strike(ctx, username: str, *, reason: str):
-    """Assigns a strike. Triggers a DM and a 5-day automated server mute if limit is hit."""
-    member = find_member_by_name(ctx.guild, username)
-    if not member:
-        await ctx.send(f"❌ Could not find a user named '{username}' in this server.")
+@bot.command()
+async def addstrike(ctx, member: str = None, amount: int = 1, *, reason: str = "No reason provided"):
+    # Safety check if they just typed ^addstrike with nothing else
+    if member is None:
+        await ctx.send("❌ **Error:** Please specify a player name. Example: `^addstrike Lumis`")
         return
+
+    # --- YOUR ORIGINAL STRIKE LOGIC STARTS HERE ---
+    # (Keep whatever database or array saving lines you originally had below this)
 
     member_id = member.id
     strike_database[member_id] = strike_database.get(member_id, 0) + 1
