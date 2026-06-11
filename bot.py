@@ -33,7 +33,7 @@ threading.Thread(target=run_dummy_server, daemon=True).start()
 # ==========================================
 
 # ⚠️ YOUR SECRET DISCORD BOT TOKEN IS EMBEDDED BELOW:
-TOKEN = os.getenv('MTQ1MTQxNDIxMzYzNjY1NzE5Mw.GXJhLl.WDGtLBct3NwBYMqf83zDUI-FarW_ssrVtior4Q')
+TOKEN = os.getenv('MTQ1MTQxNDIxMzYzNjY1NzE5Mw.G2jy2Y.Uvp8wrGxpv9xom_ACn3Ehr6OcNfSa_xUlwj-18')
 
 # Your server's exact unique leaderboard registry ID
 REGISTRY_ID = "obgEpL"
@@ -391,4 +391,4 @@ async def username_error(ctx, error):
         await ctx.send("❌ **Error:** Please specify a username to search.")
 
 
-bot.run("MTQ1MTQxNDIxMzYzNjY1NzE5Mw.GXJhLl.WDGtLBct3NwBYMqf83zDUI-FarW_ssrVtior4Q")
+bot.run("MTQ1MTQxNDIxMzYzNjY1NzE5Mw.G2jy2Y.Uvp8wrGxpv9xom_ACn3Ehr6OcNfSa_xUlwj-18")
