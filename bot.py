@@ -263,12 +263,10 @@ async def set_strike_limit(ctx, limit: int):
 
 @bot.command()
 async def addstrike(ctx, member: discord.Member, amount: int = 1, *, reason: str = "No reason provided"):
-    # By changing 'member: str' to 'member: discord.Member', discord.py automatically 
-    # finds the user, handles errors if they don't exist, and gives you access to .id and .add_roles()!
-
+    # discord.py automatically finds the user and gives us access to .id and .add_roles()
     member_id = member.id
     
-    # Use the 'amount' parameter we passed in so custom strike amounts work too!
+    # Use the 'amount' parameter passed in so custom strike amounts work seamlessly
     strike_database[member_id] = strike_database.get(member_id, 0) + amount
     total_strikes = strike_database[member_id]
     
@@ -300,8 +298,9 @@ async def addstrike(ctx, member: discord.Member, amount: int = 1, *, reason: str
             except discord.Forbidden:
                 print(f"⚠️ Could not DM profile {member.display_name} because their DMs are completely restricted.")
 
+            # This defines the background task cleanly with correct Python syntax
             async def unmute_countdown(target_member, target_role):
-                await asyncio.sleep(432000)
+                await asyncio.sleep(432000)  # 5 days in seconds
                 try:
                     await target_member.remove_roles(target_role)
                     
@@ -316,10 +315,8 @@ async def addstrike(ctx, member: discord.Member, amount: int = 1, *, reason: str
                 except Exception as e:
                     print(f"⚠️ Error executing scheduled unmute profile action: {e}")
 
-            async def_run():
-                import asyncio
-                asyncio.create_task(unmute_countdown(member, mute_role))
-            await unmute_countdown(member, mute_role)
+            # Fire off the background task safely
+            asyncio.create_task(unmute_countdown(member, mute_role))
             
         except discord.Forbidden:
             await ctx.send("❌ **System Error:** Bot cannot assign the mute role. Move the bot's position higher in Server Settings > Roles!")
