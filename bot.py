@@ -4,7 +4,7 @@ import aiohttp
 import asyncio
 
 # ⚠️ YOUR SECRET DISCORD BOT TOKEN IS EMBEDDED BELOW:
-TOKEN = "MTQ1MTQxNDIxMzYzNjY1NzE5Mw.GMWflr.Jd1GVfdvcSiEU5dOFb2UW8m3K5tjJYSozVvg08"
+TOKEN = os.getenv('MTQ1MTQxNDIxMzYzNjY1NzE5Mw.GXJhLl.WDGtLBct3NwBYMqf83zDUI-FarW_ssrVtior4Q')
 
 # Your server's exact unique leaderboard registry ID
 REGISTRY_ID = "obgEpL"
@@ -365,4 +365,4 @@ async def username_error(ctx, error):
         await ctx.send("❌ **Error:** Please specify a username to search.")
 
 
-bot.run("MTQ1MTQxNDIxMzYzNjY1NzE5Mw.GMWflr.Jd1GVfdvcSiEU5dOFb2UW8m3K5tjJYSozVvg08")
+bot.run("MTQ1MTQxNDIxMzYzNjY1NzE5Mw.GXJhLl.WDGtLBct3NwBYMqf83zDUI-FarW_ssrVtior4Q")
