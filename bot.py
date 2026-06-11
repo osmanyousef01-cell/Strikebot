@@ -43,7 +43,7 @@ intents.message_content = True
 intents.members = True
 
 bot = commands.Bot(command_prefix='^', intents=intents)
-
+tree = bot.tree
 # Local dictionary tracking active strikes { member_id: strike_count }
 strike_database = {}
 
