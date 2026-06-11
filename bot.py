@@ -351,7 +351,7 @@ async def check_strikes(ctx, username: str = None):
 
 # ==================== ERROR HANDLING & SAFETY NETS ====================
 
-@add_strike.error
+@addstrike.error
 @remove_strike.error
 @update_champion.error
 @set_strike_limit.error
